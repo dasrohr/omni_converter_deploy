@@ -1,0 +1,26 @@
+---
+- name: reload systemd
+  become: no
+  systemd:
+    daemon_reload: yes
+  listen: 
+    - 'restart worker'
+    - 'restart httpd'
+
+- name: restart omni_httpd
+  become:  no
+  systemd:
+    name: omni_httpd
+    state: restarted
+  listen: 
+    - 'restart httpd'
+    - 'restart converter'
+
+- name: restart omni_worker
+  become: no
+  systemd:
+    name: omni_worker
+    state: restarted
+  listen: 
+    - 'restart worker'
+    - 'restart converter'

@@ -1,0 +1,17 @@
+---
+- hosts: vvj
+  name: setup systemd
+  tasks:
+    - import_tasks: tasks/systemd.yml
+  handlers:
+    - import_tasks: tasks/handlers.yml
+
+
+- hosts: vvj
+  name: deploy omni_converter
+  become: yes
+  become_user: plex
+  tasks:
+    - import_tasks: tasks/converter.yml
+  handlers:
+    - import_tasks: tasks/handlers.yml

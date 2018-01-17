@@ -1,0 +1,52 @@
+---
+  - name: ensure /etc/conf.d
+    file:
+      state: directory
+      path: /etc/conf.d
+      owner: root
+      group: root
+
+  - name: place omni_worker.conf
+    copy:
+      src: data/omni_worker.conf
+      dest: /etc/conf.d/omni_worker
+      owner: root
+      group: root
+      mode: 0644
+    notify: 'restart worker'
+
+  - name: setup omni_worker.service
+    copy:
+      src: data/omni_worker.service
+      dest: /lib/systemd/system/omni_worker.service
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - 'restart worker'
+
+  - name: setup omni_httpd.service
+    copy:
+      src: data/omni_httpd.service
+      dest: /lib/systemd/system/omni_httpd.service
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - 'restart httpd'
+
+  - name: link omni_worker.service
+    file:
+      state: link
+      path: /etc/systemd/system/omni_worker.service
+      src: /lib/systemd/system/omni_worker.service
+    notify:
+      - 'restart worker'
+
+  - name: link omni_httpd.service
+    file:
+      state: link
+      path: /etc/systemd/system/omni_httpd.service
+      src: /lib/systemd/system/omni_httpd.service
+    notify:
+      - 'restart httpd'

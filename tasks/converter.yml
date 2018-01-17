@@ -1,0 +1,6 @@
+---
+    - name: clone git repo dasrohr/omni_converter
+      git:
+        repo: 'https://github.com/dasrohr/omni_converter.git'
+        dest: /opt/omni_converter
+      notify: 'restart converter'

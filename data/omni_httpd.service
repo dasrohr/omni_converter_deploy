@@ -1,0 +1,12 @@
+[Unit]
+Description=Omni-Convert HTTPd
+
+[Service]
+Type=simple
+User=plex
+Group=plex
+WorkingDirectory=/opt/omni_converter
+ExecStart=/opt/omni_converter/omni_httpd.py
+
+[Install]
+WantedBy=multi-user.target
